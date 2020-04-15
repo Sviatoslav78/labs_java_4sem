@@ -17,11 +17,23 @@ public class View {
     }
 
     public int getCommand() {
-        return dataInput.inputCommand(this);
+        int menuItem;
+
+        while (true) {
+            menuItem = dataInput.inputCommand();
+            if (menuItem != -1)
+                return menuItem;
+        }
     }
 
     public int[] getLimit() {
-        return dataInput.timeLimitInput(this);
+        int[] limit;
+
+        while (true) {
+            limit = dataInput.timeLimitInput(this);
+            if (limit[0] != -1)
+                return limit;
+        }
     }
 
     public void showSubscribers(Subscriber[] subscribers) {
