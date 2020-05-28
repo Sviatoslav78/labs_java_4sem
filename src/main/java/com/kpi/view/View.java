@@ -43,6 +43,7 @@ public class View {
             for (Subscriber sub : subscribers) {
                 System.out.println(sub);
             }
+
         }
     }
 

@@ -2,6 +2,8 @@ package com.kpi.view;
 
 import com.kpi.view.exception.WrongMenuItemException;
 import com.kpi.view.exception.WrongTimeException;
+import org.apache.log4j.Logger;
+
 
 import java.util.Scanner;
 
@@ -9,6 +11,7 @@ public class InputOfData {
     private Scanner scanner;
     private View view;
     private static final int INVALID_COMMAND = -1;
+    private static final Logger logger = Logger.getLogger(InputOfData.class);
 
     public InputOfData(View view) {
         scanner = new Scanner(System.in);
@@ -26,6 +29,7 @@ public class InputOfData {
                 Validator.isValidCommand(stringCommand);
 
             } catch (WrongMenuItemException e) {
+                logger.error("Invalid menu item '" + stringCommand + "' was inputted");
                 view.showError(e.getMessage());
                 return INVALID_COMMAND;
             }
@@ -48,6 +52,7 @@ public class InputOfData {
             timeArray[0] = hour;
             timeArray[1] = minute;
         } catch (WrongTimeException e) {
+            logger.error("Invalid time '" + hour + ":" + minute + "' was inputted");
             view.showError(e.getMessage());
             return new int[]{-1};
         }
@@ -55,13 +60,14 @@ public class InputOfData {
     }
 
     private int checkForInt() {
-        String intValue;
+        String intValue = "";
 
         while (true) {
             try {
                 intValue = scanner.nextLine();
                 return Integer.parseInt(intValue.trim());
             } catch (NumberFormatException e) {
+                logger.error("Incorrect hour/minute value '" + intValue + "' was inputted");
                 view.showError("hour and minute must be integer values, try again");
             }
         }
@@ -90,6 +96,7 @@ public class InputOfData {
             if (Validator.isTextFile(fileName)) {
                 return fileName;
             } else {
+                logger.error("Wrong output file extension was written");
                 view.showError("add .txt file extension, please");
             }
         }

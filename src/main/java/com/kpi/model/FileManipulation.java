@@ -2,6 +2,8 @@ package com.kpi.model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.kpi.controller.Controller;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +14,8 @@ import java.util.Scanner;
 
 
 public class FileManipulation {
-    Gson gson;
+    private Gson gson;
+    private static final Logger logger = Logger.getLogger(FileManipulation.class);
 
     public FileManipulation() {
         gson = new Gson();
@@ -24,6 +27,7 @@ public class FileManipulation {
 
         Subscriber[] subscribers = gson.fromJson(scanner.nextLine(), Subscriber[].class);
         scanner.close();
+        logger.info("Subscribers were successfully read from " + file.getName());
         return subscribers;
     }
 
